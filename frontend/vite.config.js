@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http:localhost:5000/",
+        target: "https:https://aiits-pole-detection.vercel.app/",
         secure: true,
         changeOrigin: true,
       },
