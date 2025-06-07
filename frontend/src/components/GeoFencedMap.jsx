@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Polygon, } from 'react-leaflet';
 import L from 'leaflet';
 import axios from 'axios';
+import { useSocket } from '../hooks/useSocket';
+
 
 import PlotDrawer from './PlotDrawer';
 import AddPole from './AddPole';
@@ -16,6 +18,7 @@ const outsideIcon = new L.Icon({
   iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png',
   iconSize: [32, 32],
 });
+    
 
 export default function GeoFencedMap({ mapName = "" }) {
 
@@ -29,6 +32,11 @@ export default function GeoFencedMap({ mapName = "" }) {
   console.log("plots", plots)
   console.log("poles", poles)
 
+  useSocket((data) => {
+    alert(`New Pole Added at (${data.lat}, ${data.lng})`);
+    // You can also trigger a UI update here
+  });
+
   const handleNewPlot = async (boundary) => {
     const name = prompt("Enter plot name:");
     const res = await axios.post('/api/plots', { name, boundary });
@@ -39,6 +47,7 @@ export default function GeoFencedMap({ mapName = "" }) {
     console.log("pole", pole)
     const res = await axios.post('/api/poles', pole);
     setToogle2(!toogle2)
+
   };
 
   const getPlots = async () => {

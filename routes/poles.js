@@ -44,6 +44,13 @@ router.post('/', async (req, res) => {
 
     await newPole.save();
 
+    global.io.emit('pole-added', {
+    message: 'New pole added',
+    lat,
+    lng,
+    insidePlot: !!matchedPlotId
+  });
+
     res.json(newPole);
 });
 

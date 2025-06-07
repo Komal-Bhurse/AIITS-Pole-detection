@@ -1,6 +1,8 @@
 import express from "express";
 import helmet from 'helmet';
 import path from "path";
+import http from "http";
+import {Server as Socket} from "socket.io";
 
 import connectDB from "./db-connection.js";
 
@@ -9,6 +11,21 @@ import poleRoutes from "./routes/poles.js"
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+const server = http.createServer(app);
+const io = new Socket(server);
+
+global.io = io;
+
+
+io.on('connection', (socket) => {
+  console.log('Client connected:', socket.id);
+
+  socket.on('disconnect', () => {
+    console.log('Client disconnected:', socket.id);
+  });
+});
+
 
 // Connect to Database
 connectDB();
