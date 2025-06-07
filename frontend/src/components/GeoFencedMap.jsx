@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Polygon, } from 'react-leaflet';
 import L from 'leaflet';
 import axios from 'axios';
-import { useSocket } from '../hooks/useSocket';
 
 
 import PlotDrawer from './PlotDrawer';
@@ -32,12 +31,7 @@ export default function GeoFencedMap({ mapName = "" }) {
   console.log("plots", plots)
   console.log("poles", poles)
 
-  useSocket((data) => {
-    alert(`New Pole Added at (${data.lat}, ${data.lng})`);
-    // You can also trigger a UI update here
-  });
-
-  const handleNewPlot = async (boundary) => {
+    const handleNewPlot = async (boundary) => {
     const name = prompt("Enter plot name:");
     const res = await axios.post('/api/plots', { name, boundary });
     setToogle1(!toogle1)
