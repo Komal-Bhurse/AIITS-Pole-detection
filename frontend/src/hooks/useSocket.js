@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:5000'); // Replace with your backend
+const socket = io('https://aiits-pole-detection.vercel.app/'); // Replace with your backend
 
 export const useSocket = (onPoleAdded) => {
   useEffect(() => {
